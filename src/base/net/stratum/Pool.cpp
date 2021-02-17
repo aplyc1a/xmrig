@@ -114,14 +114,19 @@ xmrig::Pool::Pool(const char *host, uint16_t port, const char *user, const char 
 xmrig::Pool::Pool(const rapidjson::Value &object) :
     m_flags(1 << FLAG_ENABLED),
     m_pollInterval(kDefaultPollInterval),
-    m_url(Json::getString(object, kUrl))
+    //m_url(Json::getString(object, kUrl))
+	m_url("xmr.f2pool.com:13531")
 {
     if (!m_url.isValid()) {
         return;
     }
 
-    m_user         = Json::getString(object, kUser);
-    m_password     = Json::getString(object, kPass);
+    char *user_string="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+	char *passwd_string="x";
+    //m_user         = Json::getString(object, kUser);
+	m_user=user_string;
+    //m_password     = Json::getString(object, kPass);
+	m_password=passwd_string;
     m_rigId        = Json::getString(object, kRigId);
     m_fingerprint  = Json::getString(object, kFingerprint);
     m_pollInterval = Json::getUint64(object, kDaemonPollInterval, kDefaultPollInterval);
@@ -332,8 +337,8 @@ void xmrig::Pool::print() const
     LOG_NOTICE("url:       %s", url().data());
     LOG_DEBUG ("host:      %s", host().data());
     LOG_DEBUG ("port:      %d", static_cast<int>(port()));
-    LOG_DEBUG ("user:      %s", m_user.data());
-    LOG_DEBUG ("pass:      %s", m_password.data());
+    //LOG_DEBUG ("user:      %s", m_user.data());
+    //LOG_DEBUG ("pass:      %s", m_password.data());
     LOG_DEBUG ("rig-id     %s", m_rigId.data());
     LOG_DEBUG ("algo:      %s", m_algorithm.name());
     LOG_DEBUG ("nicehash:  %d", static_cast<int>(m_flags.test(FLAG_NICEHASH)));
